@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 function ProjectPage() {
     //state//
     const [projectData, setProjectData] = useState({ pledges: [] });
-    //Hooks
+    //Hook 
     const { id } = useParams();
     //Effects 
     useEffect(() => {
