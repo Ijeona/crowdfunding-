@@ -11,6 +11,8 @@ import Nav from "./components/Nav/Nav";
 
 //CSS//
 import "./App.css";
+import ProjectCard from "./components/ProjectCard/ProjectCard";
+import ProjectsPage from "./pages/ProjectsPage";
 
 const HeaderLayout = () => (
   <div>
@@ -24,9 +26,10 @@ const router = createBrowserRouter([
     element: <HeaderLayout />,
     children: [
       { path: "/", element: <HomePage /> },
-      { path: "/project/:id", element: <ProjectPage/>},
+      { path: "/project/:id", element: <ProjectPage /> },
       { path: "/about", element: <AboutPage /> },
       { path: "/contact", element: <ContactPage /> },
+      { path: "/projects", element: <ProjectsPage /> },
     ],
   },
 ]);

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 // Components
 import ProjectCard from "../components/ProjectCard/ProjectCard";
 
-function HomePage() {
+function ProjectsPage() {
     //state//
     const [projectList, setProjectList] = useState([]);
 
@@ -17,16 +17,14 @@ function HomePage() {
             });
     }, []);
 
-    
     return (
         <div>
             <h1>Crowdfunding - Essential services</h1>  
             <p>
             Site to donate to homes that provide services for the needy.
             </p>
-            <h3>Latest Projects</h3>
             <div id="project-list">
-                {latestProject.map((project, key) => {
+                {projectList.map((project, key) => {
                     return <ProjectCard key={key} projectData={project} />;
                 })}
             </div>
@@ -34,4 +32,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default ProjectsPage;
