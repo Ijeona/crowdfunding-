@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import ProjectPage from "./pages/ProjectPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
+import PledgePage from "./pages/PledgePage";
 
 //components//
 import Nav from "./components/Nav/Nav";
@@ -13,6 +14,8 @@ import Nav from "./components/Nav/Nav";
 import "./App.css";
 import ProjectCard from "./components/ProjectCard/ProjectCard";
 import ProjectsPage from "./pages/ProjectsPage";
+import LoginPage from "./pages/LoginPage";
+
 
 const HeaderLayout = () => (
   <div>
@@ -30,6 +33,8 @@ const router = createBrowserRouter([
       { path: "/about", element: <AboutPage /> },
       { path: "/contact", element: <ContactPage /> },
       { path: "/projects", element: <ProjectsPage /> },
+      { path: "/login", element: <LoginPage/>},
+      { path: "/pledge", element: <PledgePage/>}
     ],
   },
 ]);

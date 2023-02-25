@@ -19,16 +19,16 @@ function ProjectsPage() {
 
     return (
         <div>
-            <h1>Crowdfunding - Essential services</h1>  
+            <h1>Crowdfunding - Essential services</h1>
             <p>
-            Site to donate to homes that provide services for the needy.
+                Site to donate to homes that provide services for the needy.
             </p>
             <div id="project-list">
                 {projectList.map((project, key) => {
                     return <ProjectCard key={key} projectData={project} />;
                 })}
             </div>
-        </div>    
+        </div>
     );
 }
 

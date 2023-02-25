@@ -17,12 +17,23 @@ function HomePage() {
             });
     }, []);
 
-    
+    function compare(a, b) {
+        if (a.date_created < b.date_created) {
+            return 1;
+        }
+        if (a.date_created > b.date_created) {
+            return -1;
+        }
+        return 0;
+    }
+
+    const latestProject = projectList.sort(compare).slice(0, 3);
+
     return (
         <div>
-            <h1>Crowdfunding - Essential services</h1>  
+            <h1>Crowdfunding - Essential services</h1>
             <p>
-            Site to donate to homes that provide services for the needy.
+                Site to donate to homes that provide services for the needy.
             </p>
             <h3>Latest Projects</h3>
             <div id="project-list">
@@ -30,7 +41,7 @@ function HomePage() {
                     return <ProjectCard key={key} projectData={project} />;
                 })}
             </div>
-        </div>    
+        </div>
     );
 }
 
