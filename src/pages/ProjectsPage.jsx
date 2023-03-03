@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 // Components
 import ProjectCard from "../components/ProjectCard/ProjectCard";
 
-function ProjectsPage() {
+function ProjectsPage(props) {
     //state//
     const [projectList, setProjectList] = useState([]);
 

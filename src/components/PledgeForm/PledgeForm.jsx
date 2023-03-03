@@ -1,22 +1,25 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-function PledgeForm() {
+function PledgeForm(props) {
+
+  const { project } = props;
+
     //State
     const [pledgeDetails, setpledgeDetails] = useState({
-        amount: 0,
+    // default values 
+        amount: "",
         comment:"",
         anonymous: false,
         project: null,
     });
 
     //Hooks
-    const navigate = useNavigate(); //using the function useNavigate from react-router-dom.
-
+    const navigate = useNavigate(); //using the function use Navigate from react-router-dom.
+    const { id } = useParams();
     //Actions
     //everytime input changes, it calls this function called handleChange. 
     //whenever we call this function, an event is passed through it. The target is the input (username,password input)
-    // id=username, value=kimghwjd
     const handleChange = (event) => {
         const {id, value} = event.target;
         // we are taking the id and value out of the input. 
@@ -24,60 +27,122 @@ function PledgeForm() {
         setpledgeDetails((pledgeDetails) =>({
             ...pledgeDetails, ///... doesn't give nested objects
             [id]: value,
+            project: project.id,
+
         }));
     };
 
-    const postData = async () => { //we are using async as we are doing await first
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}pledges/`,
-          {
-            method: "post",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(pledgeDetails),
-          }
-        );
-        return response.json();
-      };
+    // const postData = async () => { //we are using async as we are doing await first
+    //     const response = await fetch(
+    //       `${import.meta.env.VITE_API_URL}pledges/`,
+    //       {
+    //         method: "post",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(pledgeDetails),
+    //       }
+    //     );
+    //     return response.json();
+    //   };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (window.localStorage.getItem("token")) {
-            console.log("token exists");
-            await postData();
-            navigate("/");
+        const loggedIn = window.localStorage.getItem("token");
+
+        if (loggedIn) {
+          try {
+            const response = await fetch(
+            `${import.meta.env.VITE_API_URL}pledges/`,
+            {
+            method: "post",
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${loggedIn}`,
+            // "project": `${project.id}`, //not working
+            },
+            body: JSON.stringify(pledgeDetails),
+            }
+        );
+        navigate("/");
+      } catch (err) {
+        console.error(err);
         }
+      } else {
+        navigate(`/login`);
+//       }
+//         return response.json();
+//       };
+//           }
+//         }
+
+//         if("token"){
+//           console.log("token exists");
+//           await postData();
+//           navigate("/");
+// // trying to submit this but not working - will need to check with mentor.
+
+      
+//         // if (window.localStorage.getItem("token")) {
+//         //     console.log("token exists");
+//         //     await postData();
+//         //     navigate("/");
+//         // }
         
-        //     const { token } = await postData(); //calls the function above and returns JSON data
-        //     window.localStorage.setItem("token", token); //when we set an item in local, we have to set a key and value
-        // navigate("/"); //navigates to base url
-        // }
-      };
+    };
+  };
 
     return (
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="amount">Amount:</label>
           <input
-            type="text"
-            id="username"
+            type="number"
+            id="amount"
             onChange={handleChange}
-            placeholder="Enter username"
+            placeholder="Enter Amount"
           />
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="comment">Comment:</label>
           <input
-            type="password"
-            id="password"
+            type="text"
+            id="comment"
             onChange={handleChange}
-            placeholder="Password"
+            placeholder="Add a Comment"
           />
         </div>
+        <div>
+          <label htmlFor="Anonymous">Would you like to stay Anonymous:</label>
+          <input
+            type="radio"
+            id="anonymous"
+            onChange={handleChange}
+            value="True"
+            name="anonymous"
+          />
+            <label for="yes">Yes</label>
+         <input
+            type="radio"
+            id="anonymous"
+            onChange={handleChange}
+            value="False"
+            name="anonymous"
+          />
+            <label for="No">No</label>
+        </div>
+        {/* <div>
+          <label htmlFor="Project">Choose the Project:</label>
+          <input
+            type="Number"
+            id="project"
+            onChange={handleChange}
+            placeholder="Add a Comment"
+          />
+        </div> */}
         <button type="submit">
-          Login
+          Submit Pledge
         </button>
       </form>
     );
