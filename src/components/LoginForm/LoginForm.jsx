@@ -46,6 +46,7 @@ function LoginForm() {
         if (credentials.username && credentials.password) {
             const { token } = await postData();
             window.localStorage.setItem("token", token);
+            window.localStorage.setItem("username",credentials.username)
             navigate("/");
         }
     };
