@@ -1,0 +1,52 @@
+.project-form {
+    margin-top: 50px;
+  }
+  
+  form div {
+    width: 80vw;
+    max-width: 540px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+  /* FORM Input fields */
+  input {
+    border: none;
+    height: 40px;
+    margin-bottom: 15px;
+    padding: 13px;
+    /* background-color: rgba(211, 211, 211, 0.432); */
+    background-color: white;
+    border-radius: 10px;
+  }
+  
+  .checkbox-field {
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+  }
+  
+  .checkbox {
+    height: 13px;
+    margin-left: 20px;
+  }
+  
+  /* SUBMIT BUTTON */
+  .project-button {
+    text-decoration: none;
+    margin: auto;
+    border-radius: 20px;
+    border: none;
+    background-color: #0ca56e;
+    color: white;
+    /* border: solid 0.2px grey; */
+    height: 50px;
+    width: 50%;
+    margin-top: 10px;
+  }
+  
+  .project-button:hover {
+    background-color: #0ca56e;
+    color: white;
+    border: none;
+  }

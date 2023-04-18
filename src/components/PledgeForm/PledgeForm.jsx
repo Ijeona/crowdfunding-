@@ -6,7 +6,7 @@ function PledgeForm(props) {
   const { project } = props;
 
     //State
-    const [pledgeDetails, setpledgeDetails] = useState({
+    const [pledgeDetails, setPledgeDetails] = useState({
     // default values 
         amount: "",
         comment:"",
@@ -24,7 +24,7 @@ function PledgeForm(props) {
         const {id, value} = event.target;
         // we are taking the id and value out of the input. 
 
-        setpledgeDetails((pledgeDetails) =>({
+        setPledgeDetails((pledgeDetails) =>({
             ...pledgeDetails, ///... doesn't give nested objects
             [id]: value,
             project: project.id,
@@ -54,98 +54,72 @@ function PledgeForm(props) {
         if (loggedIn) {
           try {
             const response = await fetch(
-            `${import.meta.env.VITE_API_URL}pledges/`,
-            {
-            method: "post",
-            headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Token ${loggedIn}`,
-            // "project": `${project.id}`, //not working
-            },
-            body: JSON.stringify(pledgeDetails),
+              `${import.meta.env.VITE_API_URL}pledges/`,
+              {
+                method: "post",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Token ${authToken}`,
+                },
+                body: JSON.stringify({ project: project.id, ...pledges }),
+              }
+            );
+            if (!response.ok) {
+              throw new Error(await response.text());
             }
-        );
-        navigate("/");
-      } catch (err) {
-        console.error(err);
+            location.reload();
+          } catch (err) {
+            console.error(err);
+            alert(`Error: ${err.message}`);
+          }
+        } else {
+    
+          navigate(`/login`);
         }
-      } else {
-        navigate(`/login`);
-//       }
-//         return response.json();
-//       };
-//           }
-//         }
-
-//         if("token"){
-//           console.log("token exists");
-//           await postData();
-//           navigate("/");
-// // trying to submit this but not working - will need to check with mentor.
-
-      
-//         // if (window.localStorage.getItem("token")) {
-//         //     console.log("token exists");
-//         //     await postData();
-//         //     navigate("/");
-//         // }
-        
-    };
-  };
-
-    return (
-      <form onSubmit={handleSubmit}>
+      };
+    
+      return (
         <div>
-          <label htmlFor="amount">Amount:</label>
-          <input
-            type="number"
-            id="amount"
-            onChange={handleChange}
-            placeholder="Enter Amount"
-          />
+          <form onSubmit={handleSubmit}>
+            <div>
+              <h3>Donate Now:</h3>
+              <input
+                type="number"
+                min="1"
+                id="amount"
+                placeholder="Help Make Someone's Dream Garden come true!"
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                id="comment"
+                placeholder="Leave a Comment"
+                maxlength="100"
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="anonymous">
+                Anonymous:
+                <input
+                  className="checkbox"
+                  type="checkbox"
+                  id="anonymous"
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div>
+              <button className="project-button" type="submit">
+                Pledge
+              </button>
+            </div>
+          </form>
         </div>
-        <div>
-          <label htmlFor="comment">Comment:</label>
-          <input
-            type="text"
-            id="comment"
-            onChange={handleChange}
-            placeholder="Add a Comment"
-          />
-        </div>
-        <div>
-          <label htmlFor="Anonymous">Would you like to stay Anonymous:</label>
-          <input
-            type="radio"
-            id="anonymous"
-            onChange={handleChange}
-            value="True"
-            name="anonymous"
-          />
-            <label for="yes">Yes</label>
-         <input
-            type="radio"
-            id="anonymous"
-            onChange={handleChange}
-            value="False"
-            name="anonymous"
-          />
-            <label for="No">No</label>
-        </div>
-        {/* <div>
-          <label htmlFor="Project">Choose the Project:</label>
-          <input
-            type="Number"
-            id="project"
-            onChange={handleChange}
-            placeholder="Add a Comment"
-          />
-        </div> */}
-        <button type="submit">
-          Submit Pledge
-        </button>
-      </form>
-    );
-  }
-  
-  export default PledgeForm;
+      );
+    }
+    
+    export default PledgeForm;
+    

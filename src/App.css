@@ -1,7 +1,190 @@
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Pro&family=Literata");
+
+* {
+  font-family: 'Crimson Pro', serif;
+}
+
+body {
+  background-color: white;
+}
+
+p {
+  font-size: 15px;
+}
+
+img {
+  height: 100%;
+  border-radius: 10px;
+}
+
+/*HOME PAGE */
+
+
+.project-container {
+  width: 85%;
+  padding: 20px;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  background-color: #0ca56e;
+}
 
 #project-list {
   display: grid;
-  grid-template-columns: 30% 30% 30%;
-  column-gap: 10px;
+  grid-template-columns: 33% 33% 33%;
+  column-gap: 8px;
   row-gap: 10px;
+
 }
+
+
+.outer-box {
+  margin: auto;
+  width: 80%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+}
+
+.inner-box {
+
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+
+.project-img {
+  margin: auto;
+  margin-right: 20px;
+  object-fit: cover;
+  height: 400px;
+  width: 100%;
+  padding: 30px;
+}
+
+
+.project-text {
+  padding: 30px;
+  margin: 30px;
+  margin-left: 0;
+  border-bottom: solid 1px black;
+  width: 600px;
+
+}
+
+.pledge-box {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.pledge-form {
+
+  width: 100%;
+}
+
+
+.pledge-list {
+  margin: auto;
+  height: 300px;
+  list-style-type: none;
+  overflow: scroll;
+  margin-right: 50px;
+}
+
+.pledge-blocks {
+  background-color: #10d48e;
+  font-size: 13px;
+  width: 400px;
+  margin: auto;
+  margin-bottom: 20px;
+  padding: 15px;
+  padding-left: 40px;
+  border-radius: 10px;
+  border-radius: 20px 20px 20px 0px;
+
+}
+
+.text-section {
+
+  text-align: center;
+  height: 350px;
+  width: 50%;
+  margin: auto;
+}
+
+/*  MEDIA QUERIES */
+
+@media screen and (max-width: 1260px) {
+
+  .pledge-blocks {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .pledge-form {
+    margin-left: 30px;
+  }
+}
+
+
+@media screen and (max-width: 1180px) {
+  .project-img {
+    display: flex;
+    margin: auto;
+    padding: 0;
+  }
+
+  .pledge-box {
+    display: block;
+  }
+
+  .pledge-blocks {
+    margin: auto;
+    margin-bottom: 20px;
+    width: 60%;
+  }
+
+  .project-text {
+    width: 80%;
+    margin: auto;
+    padding: 30px;
+  }
+  .inner-box {
+    display: block;
+    align-content: center;
+
+    margin: auto;
+  }
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 800px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  .pledge-form {
+    width: 100%;
+    margin: 0;
+  }
+
+  .pledge-blocks {
+    margin: auto;
+    margin-bottom: 20px;
+    width: 70%;
+  }
+
+  #project-list {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  p {
+    font-size: 10px;
+  }
+}
+

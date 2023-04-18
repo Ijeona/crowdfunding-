@@ -1,61 +1,66 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+// Dummy data
+import { oneProject } from "../data";
 import PledgeForm from "../components/PledgeForm/PledgeForm";
-
+import ProgressBar from "../components/ProgressBar";
 
 function ProjectPage() {
-    //state//
-    const [project, setProject] = useState({ pledges: [] });
-    const [users, setUsers] = useState();
-    //Hook 
-    const { id } = useParams();
-    //Logged in features 
-    const loggedIn = window.localStorage.getItem("token");
-    const username = window.localStorage.getItem("username");
-    const isOwner = true 
-console.log(users,username)
-    //Effects 
-    useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}projects/${id}`)
-            .then((results) => {
-                return results.json();
-            })
-            .then((data) => {
-                setProject(data);
-            });
-    }, []);
+  const [projectData, setProjectData] = useState({ pledges: [] });
 
-    useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_URL}users`)
-            .then((results) => {
-                return results.json();
-            })
-            .then((data) => {
-                setUsers(data);
-            });
-    }, []);
-    console.log(project)
-    return (
-        <div>
-            <h2>{project.title}</h2>
-            <h3>Created at: {project.date_created}</h3>
-            <h3>{`Status: ${project.is_open}`}</h3>
-            {loggedIn && isOwner && ( <button>Edit</button>)/**button will only show if logged in and owner of project */}  
-            <h3>Pledges:</h3>
-            <ul>
-                {project.pledges.map((pledgeData, key) => {
-                    return (
-                        <li key={key}>
-                            {pledgeData.amount} from {pledgeData.supporter}
-                        </li>
-                    );
-                })}
-            </ul>
-            <PledgeForm project={project} />
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}projects/${id}`)
+      .then((results) => {
+        return results.json();
+      })
+      .then((data) => {
+        setProjectData(data);
+      });
+  }, []);
+
+  return (
+    <div>
+      <div className="outer-box">
+        <div className="inner-box">
+          <img className="project-img" src={projectData.image} />
+          <div className="project-text">
+            <h2>{projectData.title}</h2>
+            <p>{new Date(projectData.date_created).toLocaleDateString()}</p>
+            <p>{projectData.description}</p>
+            <p>{projectData.is_open ? <p>Still open</p> : <p>Closed</p>}</p>
+            <ProgressBar goal={projectData.goal} total={projectData.total} />
+          </div>
         </div>
-
-    );
+      </div>
+      <div className="outer-box">
+        <div className="pledge-box">
+          <div>
+            <ul className="pledge-list">
+              <h3>Pledges:</h3>
+              {projectData.pledges.map((pledgeData, key) => {
+                return (
+                  <li className="pledge-blocks" key={key}>
+                    <b>
+                      {pledgeData.supporter
+                        ? pledgeData.supporter
+                        : "anonymous"}
+                    </b>{" "}
+                    | ${pledgeData.amount}
+                    <br />"{pledgeData.comment}"
+                  </li>
+                );
+              })}{" "}
+            </ul>
+          </div>
+          <div class="pledge-form">
+            <PledgeForm project={projectData} />{" "}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
-
 
 export default ProjectPage;

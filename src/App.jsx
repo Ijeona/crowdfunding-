@@ -6,43 +6,49 @@ import ProjectPage from "./pages/ProjectPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import PledgePage from "./pages/PledgePage";
-
-//components//
-import Nav from "./components/Nav/Nav";
-
-//CSS//
-import "./App.css";
-import ProjectCard from "./components/ProjectCard/ProjectCard";
-import ProjectsPage from "./pages/ProjectsPage";
 import LoginPage from "./pages/LoginPage";
 
 
-const HeaderLayout = () => (
-  <div>
-    <Nav />
-    <Outlet />
-  </div>
-);
+//components//
+import Nav from "./components/Nav/Nav";
+import Footer from "./components/Footer/Footer";
+
+//CSS//
+import "./App.css";
+
+import ProjectsPage from "./pages/ProjectsPage";
+import LoginPage from "./pages/LoginPage";
+
+const Layout = () => {
+  const [loggedIn, setLoggedIn] = useState(
+    window.localStorage.getItem("token") != null
+  );
+
+  return (
+    <div>
+      <Nav loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Outlet context={[loggedIn, setLoggedIn]} />
+      <Footer />
+    </div>
+  );
+};
 
 const router = createBrowserRouter([
   {
-    element: <HeaderLayout />,
+    element: <Layout />,
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/project/:id", element: <ProjectPage /> },
-      { path: "/about", element: <AboutPage /> },
-      { path: "/contact", element: <ContactPage /> },
-      { path: "/projects", element: <ProjectsPage /> },
-      { path: "/login", element: <LoginPage/>},
-      { path: "/pledge", element: <PledgePage/>}
+      { path: "/login", element: <LoginPage /> },
+      { path: "/project", element: <AllProjectPage /> },
+      { path: "/create-project", element: <CreateProjectPage /> },
+      { path: "/login", element: <LoginPage/> },
     ],
   },
 ]);
 
 function App() {
-  return (
-    <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
