@@ -45,16 +45,21 @@ function LoginForm() {
         event.preventDefault();
         if (credentials.username && credentials.password) {
             const { token } = await postData();
-            // window.localStorage.setItem("token", token);
-            window.localStorage.setItem("username",credentials.username)
-            navigate("/");
-        }
-    };
+            if (token !== undefined) {
+              window.localStorage.setItem("token", token);
+              setLoggedIn(true);
+              navigate("/");
+            } else {
+              setLoggedIn(false);
+            }
+          }
+        };
 
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="username">Username:</label>
+                <h1>Log In Form:</h1>
+                {/* {<label htmlFor="username">Username:</label>} */}
                 <input
                     type="text"
                     id="username"
@@ -64,11 +69,11 @@ function LoginForm() {
                 />
             </div>
             <div>
-                <label htmlFor="password">Password:</label>
+                {/* {<label htmlFor="password">Password:</label>} */}
                 <input
                     type="password"
                     id="password"
-                    placeholder="Password"
+                    placeholder="Enter Password"
                     onChange={handleChange}
 
                 />
