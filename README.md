@@ -8,4 +8,4 @@ Our platform allows users to create and fund campaigns for a variety of garden-r
 Join us in our mission to create beautiful, sustainable gardens and connect with a community of passionate gardeners. Let's work together to build the garden of your dreams!
 
 **Tech Stack**
-Front End Project utlising #REACT & Tailwind CSS - Deployed to above link via Netlify (https://www.netlify.com/) Back End Project utlising #DRF & deployed via FlyIO - https://fly.io/ ||
+Front End Project utlising REACT and Javascript- via Netlify (https://www.netlify.com/) + Back End Project utlising DRF & deployed via FlyIO - https://fly.io/ ||
